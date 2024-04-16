@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\EmployeeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +41,22 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('GetBiometicAttendance', 'GetBiometicAttendance');
 });
 
-// here add routes Module wise
+Route::controller(StudentController::class)->group(function () {
+    Route::post('student',[StudentController::class, 'addStudent']);
+    Route::get('students', [StudentController::class, 'getAllStudents']);
+    Route::get('students/{id}', [StudentController::class, 'getStudentById']);
+    Route::delete('students/{id}', [StudentController::class, 'deleteStudent']);
+    Route::put('students/{id}', [StudentController::class, 'updateStudent']);
+});
+
+Route::controller(EmployeeController::class)->group(function () {
+    Route::post('employee',[EmployeeController::class, 'addEmployee']);
+    Route::get('employees', [EmployeeController::class, 'getAllEmployees']);
+    Route::get('employees/{id}', [EmployeeController::class, 'getEmployeeById']);
+    Route::delete('employees/{id}', [EmployeeController::class, 'deleteEmployee']);
+    Route::put('employees/{id}', [EmployeeController::class, 'updateEmployee']);
+});
 
 include('adminRoutes.php');
 include('userRoutes.php');
+
