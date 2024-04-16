@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\StudentController;
-
 
 
 /*
@@ -27,3 +25,4 @@ Route::get('/login', function () {
 Route::controller(AdminController::class)->group(function () {
     //  Route::get('test', 'test');
 });
+
