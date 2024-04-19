@@ -6,8 +6,9 @@ use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 
 class StudentController extends Controller
-{ 
-    public function addStudent(StudentRequest $studentRequest){
+{
+    public function addStudent(StudentRequest $studentRequest)
+    {
         try {
             $student = Student::create($studentRequest->validated());
             \Log::info('Student added successfully.');
@@ -27,20 +28,21 @@ class StudentController extends Controller
             return response()->json(['error' => 'An error occurred while fetching students.'], 500);
         }
     }
-    public function getStudentById($id)
+    public function getStudentByAadharCardNo($aadhar_card_no)
     {
         try {
-            $student = Student::findOrFail($id);
+            $student = Student::where('aadhar_card_no', $aadhar_card_no)->firstOrFail();
             return response()->json($student, 200);
         } catch (\Exception $e) {
             \Log::error('Error fetching student: ' . $e->getMessage());
             return response()->json(['error' => 'Student not found.'], 404);
         }
     }
-    public function deleteStudent($id)
+
+    public function deleteStudentByAadharCardNo($aadhar_card_no)
     {
         try {
-            $student = Student::findOrFail($id);
+            $student = Student::where('aadhar_card_no', $aadhar_card_no)->firstOrFail();
             $student->delete();
             return response()->json(['message' => 'Student deleted successfully.'], 200);
         } catch (\Exception $e) {
@@ -48,10 +50,11 @@ class StudentController extends Controller
             return response()->json(['error' => 'Student not found.'], 404);
         }
     }
-    public function updateStudent(StudentRequest $studentRequest, $id)
+
+    public function updateStudentByAadharCardNo(StudentRequest $studentRequest, $aadhar_card_no)
     {
         try {
-            $student = Student::findOrFail($id);
+            $student = Student::where('aadhar_card_no', $aadhar_card_no)->firstOrFail();
             $student->update($studentRequest->all());
             return response()->json($student, 200);
         } catch (\Exception $e) {
@@ -59,4 +62,5 @@ class StudentController extends Controller
             return response()->json(['error' => 'Student not found.'], 404);
         }
     }
+
 }
